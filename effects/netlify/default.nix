@@ -9,6 +9,7 @@ args@{ content
 , siteId
 , productionDeployment ? false
 , secretsMap ? {}
+, netlifyExtraArgs ? []
 , ...
 }:
 let
@@ -16,7 +17,7 @@ let
     "--dir=${content}"
     "--site=${siteId}"
     "--json"
-  ] ++ lib.optionals productionDeployment [ "--prod" ];
+  ] ++ lib.optionals productionDeployment [ "--prod" ] ++ netlifyExtraArgs;
 in
 mkEffect (args // {
   inputs = [ netlify-cli ];
